@@ -1,52 +1,183 @@
+<?php
+require "config/constants.php";
+session_start();
+if(isset($_SESSION["uid"])){
+	header("location:profile.php");
+}
+?>
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <title>Tạo mới đơn hàng</title>
-        <!-- Bootstrap core CSS -->
-        <link href="/vnpay_php/assets/bootstrap.min.css" rel="stylesheet"/>
-        <!-- Custom styles for this template -->
-        <link href="/vnpay_php/assets/jumbotron-narrow.css" rel="stylesheet">  
-        <script src="/vnpay_php/assets/jquery-1.11.3.min.js"></script>
-    </head>
-
-    <body>
-    <div class="container">
-           <div class="header clearfix">
-
-                <h3 class="text-muted">VNPAY DEMO</h3>
-            </div>
-                <div class="form-group">
-                    <button onclick="pay()">Giao dịch thanh toán</button><br>
-                </div>
-                <div class="form-group">
-                    <button onclick="querydr()">API truy vấn kết quả thanh toán</button><br>
-                </div>
-                <div class="form-group">
-                    <button onclick="refund()">API hoàn tiền giao dịch</button><br>
-                </div>
-            <p>
-                &nbsp;
-            </p>
-            <footer class="footer">
-                   <p>&copy; VNPAY <?php echo date('Y')?></p>
-            </footer>
-        </div> 
-        <script>
-             function pay() {
-              window.location.href = "/vnpay_php/vnpay_pay.php";
-            }
-            function querydr() {
-              window.location.href = "/vnpay_php/vnpay_querydr.php";
-            }
-             function refund() {
-              window.location.href = "/vnpay_php/vnpay_refund.php";
-            }
-        </script>
-    </body>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Han Store</title>
+		<link rel="stylesheet" href="css/bootstrap.min.css"/>
+		<script src="js/jquery2.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="main.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<style></style>
+	</head>
+<body>
+<div class="wait overlay">
+	<div class="loader"></div>
+</div>
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">	
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapse" aria-expanded="false">
+					<span class="sr-only">navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a href="#" class="navbar-brand">Han Store</a>
+			</div>
+		<div class="collapse navbar-collapse" id="collapse">
+			<ul class="nav navbar-nav">
+				<li><a href="index.php"><span class="glyphicon glyphicon-home"></span>Home</a></li>
+				
+			</ul>
+			<form class="navbar-form navbar-left">
+		        <div class="form-group">
+		          <input type="text" class="form-control" placeholder="Search" id="search">
+		        </div>
+		        <button type="submit" class="btn btn-primary" id="search_btn"  style="background-color: #c69a39"><span class="glyphicon glyphicon-search"></span></button>
+		     </form>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-shopping-cart"></span>Cart<span class="badge">0</span></a>
+					<div class="dropdown-menu" style="width:400px;">
+						<div class="panel panel-success">
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-md-3">STT</div>
+									<div class="col-md-3">Ảnh</div>
+									<div class="col-md-3">Tên</div>
+									<div class="col-md-3">Giá</div>
+								</div>
+							</div>
+							<div class="panel-body">
+								<div id="cart_product">
+								<!--<div class="row">
+									<div class="col-md-3">Sl.No</div>
+									<div class="col-md-3">Product Image</div>
+									<div class="col-md-3">Product Name</div>
+									<div class="col-md-3">Price in $.</div>
+								</div>-->
+								</div>
+							</div>
+							<div class="panel-footer"></div>
+						</div>
+					</div>
+				</li>
+                                <li><a href="login_form.php" class="btn btn-login" ><span class="glyphicon glyphicon-user"></span>LogIn User</a>
+				<li><a href="admin/login.php" class="btn btn-login" ><span class="glyphicon glyphicon-user"></span>Login Admin</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>	
+	<p><br/></p>
+	<p><br/></p>
+	<p><br/></p>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-2 col-xs-12">
+				<div id="get_category">
+				</div>
+				<!--<div class="nav nav-pills nav-stacked" id="get_category">
+					<li class="active" ><a href="#"><h4 >Categories</h4></a></li>
+					<li><a href="#">Categories</a></li>
+					<li><a href="#">Categories</a></li>
+					<li><a href="#">Categories</a></li>
+					<li><a href="#">Categories</a></li>
+				</div> -->
+				<div id="get_brand">
+				</div>
+				<!--<div class="nav nav-pills nav-stacked">
+					<li class="active"><a href="#"><h4>Brand</h4></a></li>
+					<li><a href="#">Categories</a></li>
+					<li><a href="#">Categories</a></li>
+					<li><a href="#">Categories</a></li>
+					<li><a href="#">Categories</a></li>
+				</div> -->
+			</div>
+			<div class="col-md-8 col-xs-12">
+				<div class="row">
+					<div class="col-md-12 col-xs-12" id="product_msg">
+					</div>
+				</div>
+				<div class="panel panel-info" style="border-color: #c69a39">
+					<div class="panel-heading" style="background-color: #c69a39; color: white; font-weight: bold">Sản phẩm</div>
+					<div class="panel-body" >
+						<div id="get_product">
+							<!--Here we get product jquery Ajax Request-->
+						</div>
+						<!--<div class="col-md-4">
+							<div class="panel panel-info">
+								<div class="panel-heading">Samsung Galaxy</div>
+								<div class="panel-body">
+									<img src="product_images/images.JPG"/>
+								</div>
+								<div class="panel-heading">$.500.00
+									<button style="float:right;" class="btn btn-danger btn-xs">AddToCart</button>
+								</div>
+							</div>
+						</div> -->
+					</div>
+					<div class="panel-footer">&copy; 2023</div>
+				</div>
+			</div>
+			<div class="col-md-1"></div>
+		</div>
+	</div>
+    
+</body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
