@@ -15,7 +15,10 @@ if(isset($_SESSION["uid"])){
 		<script src="js/bootstrap.min.js"></script>
 		<script src="main.js"></script>
 		<link rel="stylesheet" type="text/css" href="style.css">
+
                  <link href='//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css' rel='stylesheet'/>
+
+
 		<style></style>
 	</head>
 <body>
@@ -135,6 +138,7 @@ if(isset($_SESSION["uid"])){
     
 </body>
 
+
 <footer id="footer" class="footer-1" style="background: #252525; color: white;">
 <div class="main-footer widgets-dark typo-light">
 <div class="container">
@@ -244,6 +248,8 @@ if(isset($_SESSION["uid"])){
 </div>
 </div>
 </footer>
+
+
 </html>
 
 
